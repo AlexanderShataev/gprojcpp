@@ -1,2 +1,2 @@
-# gprojcpp
+# C++ GProject lessons
 C++ lessons
