@@ -1,0 +1,6 @@
+[submodule "lesson_1/alexander/regionAndCityApp/googletest"]
+	path = lesson_1/alexander/regionAndCityApp/googletest
+	url = git@github.com:google/googletest.git
+[submodule "lesson_1/alexander/regionAndCityApp/3rdparty/googletest"]
+	path = lesson_1/alexander/regionAndCityApp/3rdparty/googletest
+	url = git@github.com:google/googletest.git
