@@ -56,11 +56,18 @@ namespace CSVParserImpl {
         if (bool ok = qi::phrase_parse(begin, end, p, qi::blank, parsed))
         {
             for(auto& line : parsed) {
-                auto&& stateName = std::move(line[0]);
-                auto&& cityName = std::move(line[4]);
+                auto&& cityName = std::move(line[0]);
+                auto&& stateName = std::move(line[4]);
                 auto itState = states.find(stateName);
-                TRA::RegionNodePtr<TRA::StateRegion> curState = (itState != states.end() ? itState->second : std::make_shared<TRA::TreeNodeRegion<TRA::StateRegion> >(TRA::StateRegion(stateName)));
-                //curState->addChild(std::make_shared<RegionNode<TreeAnalyzer::CityRegion> >(TreeAnalyzer::CityRegion(stateName)));
+                TRA::RegionNodePtr<TRA::StateRegion> curState;
+                if (itState != states.end()) {
+                    curState = itState->second;
+                }
+                else {
+                    curState = std::make_shared<TRA::TreeNodeRegion<TRA::StateRegion> >(TRA::StateRegion(stateName));
+                    states.insert(std::make_pair(stateName, curState));
+                }
+                curState->addChild(std::make_shared<TRA::TreeNodeRegion<TRA::CityRegion> >(TRA::CityRegion(cityName)));
             }
         } else
         {

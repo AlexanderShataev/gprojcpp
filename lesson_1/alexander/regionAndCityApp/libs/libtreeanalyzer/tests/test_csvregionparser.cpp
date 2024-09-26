@@ -27,9 +27,9 @@ TEST(LIB_TRA_PARSER, VALID_LOAD_STRING) {
     ASSERT_FALSE(res.empty());
 
     auto stateIt = std::find_if(res.begin(), res.end(), [](const TRA::RegionNodePtr<TRA::StateRegion>& region) {
-        return region->getObject().getName() == "Russia";
+        return region->getObject().getName() == "China";
     });
 
     ASSERT_FALSE(stateIt == res.end());
-    ASSERT_TRUE((*stateIt)->getObject().getName() == "Москва");
+    ASSERT_TRUE(std::static_pointer_cast<TRA::TreeNodeRegion<TRA::CityRegion>>((*stateIt)->getChilds().front())->getObject().getName() == "Beijing");
 }
