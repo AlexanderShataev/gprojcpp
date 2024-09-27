@@ -13,6 +13,7 @@
 class CSVRegionParser {
 public:
     [[nodiscard]] explicit CSVRegionParser();
+    std::set<TRA::RegionNodePtr<TRA::StateRegion >> parseFromFile(const std::string& pathToSourceFile);
     std::set<TRA::RegionNodePtr<TRA::StateRegion >> parseFromMappingFile(const std::string& pathToSourceFile);
     std::set<TRA::RegionNodePtr<TRA::StateRegion >> parseFromString(const std::string& csvString);
     [[nodiscard]] bool hasError() const;

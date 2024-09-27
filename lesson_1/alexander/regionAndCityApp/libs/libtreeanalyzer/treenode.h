@@ -12,11 +12,8 @@ namespace TRA {
     class TreeNode: public std::enable_shared_from_this<TreeNode> {
     public:
         TreeNode() = default;
-
         void addChild(std::shared_ptr<TreeNode>&& child);
-
         std::shared_ptr<TreeNode> getParent() const;
-
         std::list<std::shared_ptr<TreeNode> > getChilds() const;
 
     private:
