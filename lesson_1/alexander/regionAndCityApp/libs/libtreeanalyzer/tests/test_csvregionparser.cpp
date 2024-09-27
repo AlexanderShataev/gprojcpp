@@ -8,9 +8,12 @@
 #include <string>
 #include <algorithm>
 #include <set>
+#include <ctime>
+
 
 TEST(LIB_TRA_PARSER, VALID_LOAD_STRING) {
-    std::string example = R"("Dhaka","Dhaka","23.7639","90.3889","Bangladesh","BD","BGD","Dhaka","primary","18627000","1050529279"
+    std::string example =
+            R"("Dhaka","Dhaka","23.7639","90.3889","Bangladesh","BD","BGD","Dhaka","primary","18627000","1050529279"
 "Beijing","Beijing","39.9067","116.3975","China","CN","CHN","Beijing","primary","18522000","1156228865"
 "Kolkāta","Kolkata","22.5675","88.3700","India","IN","IND","West Bengal","admin","18502000","1356060520"
 "Bangkok","Bangkok","13.7525","100.4942","Thailand","TH","THA","Krung Thep Maha Nakhon","primary","18007000","1764068610"
@@ -25,11 +28,76 @@ TEST(LIB_TRA_PARSER, VALID_LOAD_STRING) {
     auto res = parser.parseFromString(example);
 
     ASSERT_FALSE(res.empty());
-
-    auto stateIt = std::find_if(res.begin(), res.end(), [](const TRA::RegionNodePtr<TRA::StateRegion>& region) {
+    auto stateIt = std::find_if(res.begin(), res.end(), [](const TRA::RegionNodePtr<TRA::StateRegion> &region) {
         return region->getObject().getName() == "China";
     });
 
     ASSERT_FALSE(stateIt == res.end());
-    ASSERT_TRUE(std::static_pointer_cast<TRA::TreeNodeRegion<TRA::CityRegion>>((*stateIt)->getChilds().front())->getObject().getName() == "Beijing");
+    ASSERT_TRUE(
+        std::static_pointer_cast<TRA::TreeNodeRegion<TRA::CityRegion>>((*stateIt)->getChilds().front())->getObject().
+        getName() == "Beijing");
+}
+
+TEST(LIB_TRA_PARSER, VALID_LOAD_FILE_MAPPING) {
+    CSVRegionParser parser;
+
+    std::clock_t c_start = std::clock();
+    auto res = parser.parseFromMappingFile("../../../../../../../lesson_1/dataset/worldcities.csv");
+    std::clock_t c_end = std::clock();
+
+    double time_elapsed_ms = 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC;
+    std::cout << "MAPPING CPU time used: "
+            << time_elapsed_ms
+            << " ms\n";
+    ASSERT_FALSE(res.empty());
+    auto stateIt = std::find_if(res.begin(), res.end(), [](const TRA::RegionNodePtr<TRA::StateRegion> &region) {
+        return region->getObject().getName() == "China";
+    });
+
+    ASSERT_FALSE(stateIt == res.end());
+    auto citiies = (*stateIt)->getChilds();
+    auto beijingCityIt = std::find_if(citiies.begin(), citiies.end(), [](const std::shared_ptr<TRA::TreeNode> &city) {
+        auto cityPtr = std::static_pointer_cast<TRA::TreeNodeRegion<TRA::CityRegion> >(city);
+        return cityPtr->getObject().getName() == "Beijing";
+    });
+    ASSERT_FALSE(beijingCityIt == citiies.end());
+
+    auto unknownCityIt = std::find_if(citiies.begin(), citiies.end(), [](const std::shared_ptr<TRA::TreeNode> &city) {
+        auto cityPtr = std::static_pointer_cast<TRA::TreeNodeRegion<TRA::CityRegion> >(city);
+        return cityPtr->getObject().getName() == "HrenTown";
+    });
+
+    ASSERT_TRUE(unknownCityIt == citiies.end());
+}
+
+TEST(LIB_TRA_PARSER, VALID_LOAD_FILE_READING) {
+    CSVRegionParser parser;
+
+    std::clock_t c_start = std::clock();
+    auto res = parser.parseFromFile("../../../../../../../lesson_1/dataset/worldcities.csv");
+    std::clock_t c_end = std::clock();
+
+    double time_elapsed_ms = 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC;
+    std::cout << "READING CPU time used: "
+            << time_elapsed_ms
+            << " ms\n";
+    ASSERT_FALSE(res.empty());
+    auto stateIt = std::find_if(res.begin(), res.end(), [](const TRA::RegionNodePtr<TRA::StateRegion> &region) {
+        return region->getObject().getName() == "China";
+    });
+
+    ASSERT_FALSE(stateIt == res.end());
+    auto citiies = (*stateIt)->getChilds();
+    auto beijingCityIt = std::find_if(citiies.begin(), citiies.end(), [](const std::shared_ptr<TRA::TreeNode> &city) {
+        auto cityPtr = std::static_pointer_cast<TRA::TreeNodeRegion<TRA::CityRegion> >(city);
+        return cityPtr->getObject().getName() == "Beijing";
+    });
+    ASSERT_FALSE(beijingCityIt == citiies.end());
+
+    auto unknownCityIt = std::find_if(citiies.begin(), citiies.end(), [](const std::shared_ptr<TRA::TreeNode> &city) {
+        auto cityPtr = std::static_pointer_cast<TRA::TreeNodeRegion<TRA::CityRegion> >(city);
+        return cityPtr->getObject().getName() == "HrenTown";
+    });
+
+    ASSERT_TRUE(unknownCityIt == citiies.end());
 }
