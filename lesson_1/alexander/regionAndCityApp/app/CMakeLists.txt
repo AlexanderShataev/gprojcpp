@@ -1,16 +1,27 @@
 project(app)
 
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-add_executable(${PROJECT_NAME}
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+
+find_package(QT NAMES Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+
+set(PROJECT_SOURCES
         src/main.cpp
         src/mainwindow.cpp
+        src/mainwindow.h
+        src/mainwindow.ui
 )
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+add_executable(app
+    ${PROJECT_SOURCES}
+)
 
-set(CMAKE_AUTOMOC ON)
+include_directories(libs::libtreeanalyzer)
 
 target_link_libraries(${PROJECT_NAME}
         PRIVATE
