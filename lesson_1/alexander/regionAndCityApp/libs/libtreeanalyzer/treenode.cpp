@@ -2,7 +2,7 @@
 // Created by alexander on 16.09.2024.
 //
 
-#include "treenode.h"
+#include "include/treeanalyzer/treenode.h"
 
 void TRA::TreeNode::addChild(std::shared_ptr<TreeNode> &&child) {
     childs_container_.push_back(child);

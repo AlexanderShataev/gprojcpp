@@ -6,7 +6,7 @@
 #define REGIONS_H
 
 #include <string>
-#include "../treenode.h"
+#include "treenode.h"
 
 namespace TRA {
 
