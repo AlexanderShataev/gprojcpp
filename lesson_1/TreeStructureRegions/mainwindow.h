@@ -6,7 +6,7 @@
 #include <set>
 
 class Country;
-
+class QStandardItemModel;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -28,5 +28,6 @@ public:
 private:
     Ui::MainWindow *ui;
     std::set<Country> con;
+    QStandardItemModel* model;
 };
 #endif // MAINWINDOW_H

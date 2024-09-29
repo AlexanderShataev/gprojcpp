@@ -8,7 +8,9 @@
 #include <QTextStream>
 #include <QRegularExpression>
 
-using Params = QPair<QString, QString>;
+#include "country.h"
+
+//using Params = QPair<QString, QString>;
 
 class ParserData
 {
@@ -19,11 +21,11 @@ public:
 
     void setFilePath(const QString& filePath);
 
-    QVector<Params> parsingCSV();
+    QVector<ParamsFile> parsingCSV();
 
 private:
     QString filePath_;
-    QVector<Params> data_;
+    QVector<ParamsFile> data_;
 };
 
 #endif // PARSERDATA_H
