@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+class QStandardItemModel;
+
 namespace Ui {
 class MainWindow;
 }
@@ -14,8 +16,12 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void updateRegions(const QString& path);
 
 private:
+    void init();
+
+    QStandardItemModel* mainModel{nullptr};
     Ui::MainWindow *ui;
 };
 
