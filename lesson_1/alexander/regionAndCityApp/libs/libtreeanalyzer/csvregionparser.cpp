@@ -2,7 +2,7 @@
 // Created by alexander on 24.09.2024.
 //
 
-#include "csvregionparser.h"
+#include "treeanalyzer/csvregionparser.h"
 #include "csvparserimpl.h"
 
 #include <boost/iostreams/device/mapped_file.hpp>

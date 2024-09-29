@@ -2,7 +2,7 @@
 // Created by alexander on 23.09.2024.
 //
 
-#include "include/regions.h"
+#include "treeanalyzer/regions.h"
 
 namespace TRA {
     BaseRegions::BaseRegions(const std::string &name, const TRA::BaseRegions::RegionType region_type): name_(name),

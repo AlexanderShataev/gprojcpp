@@ -12,7 +12,7 @@
 
 #include <map>
 
-#include "include/regions.h"
+#include "treeanalyzer/regions.h"
 
 namespace qi = boost::spirit::qi;
 
