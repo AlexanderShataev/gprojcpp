@@ -10,7 +10,6 @@
 
 #include "country.h"
 
-//using Params = QPair<QString, QString>;
 
 class ParserData
 {

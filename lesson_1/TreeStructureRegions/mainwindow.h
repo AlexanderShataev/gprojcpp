@@ -7,6 +7,7 @@
 
 class Country;
 class QStandardItemModel;
+class ParamsFile;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,9 +26,12 @@ public:
     bool tryParsing();
     void initTreeView();
 
+    void initCountriesAndCities(const QVector<ParamsFile>& data);
+
 private:
     Ui::MainWindow *ui;
     std::set<Country> con;
     QStandardItemModel* model;
+    QString currentFilePath;
 };
 #endif // MAINWINDOW_H
