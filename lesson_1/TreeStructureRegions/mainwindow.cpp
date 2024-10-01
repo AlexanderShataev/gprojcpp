@@ -6,6 +6,7 @@
 #include <QStandardItemModel>
 #include <QMessageBox>
 
+#include "filesdialog.h"
 #include "country.h"
 #include "parserdata.h"
 
@@ -32,6 +33,17 @@ void MainWindow::initCountriesAndCities(const QVector<ParamsFile>& data) {
     }
 }
 
+void MainWindow::createFilesDialog()
+{
+    auto dialog = new FilesDialog(this);
+    connect(dialog, &QDialog::accepted, [&](){
+        auto path = dialog->getPath();
+        currentFilePath = path;
+        ui->lineEditPath->setText(path);
+    });
+    dialog->exec();
+}
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -39,16 +51,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // Connection
     connect(ui->pushButtonSave, &QPushButton::clicked, [&](){
         currentFilePath = ui->lineEditPath->text();
         if (currentFilePath == QString()) {
-            //QMessageBox::warning(this, "Ошибочное поведение", "Указан несуществующий путь к выборке!\n"
-            //                                                  "Проверьте путь и запустите заново..");
             currentFilePath = DEFAULT_DATASET_PATH;
         }
         tryParsing();
     });
-    //tryParsing();
+    connect(ui->pushButtonOpen, &QPushButton::clicked, this, &MainWindow::createFilesDialog);
 }
 
 MainWindow::~MainWindow()
@@ -61,6 +72,11 @@ bool MainWindow::tryParsing()
     ParserData parser;
     parser.setFilePath(currentFilePath);
     QVector<ParamsFile> params = parser.parsingCSV();
+    if (!params.size()) {
+        QMessageBox::warning(this, "Ошибочное поведение", "Указан несуществующий путь к выборке!\n"
+                                                         "Проверьте путь и запустите заново..");
+        return false;
+    }
 
     initCountriesAndCities(params);
     initTreeView();

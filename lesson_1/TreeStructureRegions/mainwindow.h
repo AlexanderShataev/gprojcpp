@@ -33,5 +33,8 @@ private:
     std::set<Country> con;
     QStandardItemModel* model;
     QString currentFilePath;
+
+    void createFilesDialog();
+
 };
 #endif // MAINWINDOW_H

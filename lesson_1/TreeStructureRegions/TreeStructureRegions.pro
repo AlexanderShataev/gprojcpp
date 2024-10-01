@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     abstractlocality.cpp \
     country.cpp \
+    filesdialog.cpp \
     main.cpp \
     mainwindow.cpp \
     parserdata.cpp
@@ -18,10 +19,12 @@ SOURCES += \
 HEADERS += \
     abstractlocality.h \
     country.h \
+    filesdialog.h \
     mainwindow.h \
     parserdata.h
 
 FORMS += \
+    filesdialog.ui \
     mainwindow.ui
 
 # Default rules for deployment.
