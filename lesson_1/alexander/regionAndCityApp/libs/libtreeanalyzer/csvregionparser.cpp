@@ -8,6 +8,8 @@
 #include <boost/iostreams/device/mapped_file.hpp>
 #include <boost/iostreams/device/file.hpp>
 
+#include <sstream>
+
 //#define PERF_TEST_ON
 
 #ifdef PERF_TEST_ON
