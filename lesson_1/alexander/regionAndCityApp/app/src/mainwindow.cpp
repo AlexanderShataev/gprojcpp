@@ -18,7 +18,7 @@ public:
         setEditable(false);
         auto&& childs = regPtr->getChilds();
         for (const auto& child : childs) {
-            appendRow(new RegionVisualItem(std::static_pointer_cast<TRA::TreeNodeRegion<TRA::BaseRegions>>(child)));
+            appendRow(new RegionVisualItem(std::static_pointer_cast<TRA::TreeNodeRegion<TRA::BaseRegions> >(child)));
         }
     }
     QVariant data(int role = Qt::UserRole + 1) const override {
@@ -52,14 +52,14 @@ void MainWindow::updateRegions(const QString &path)
 
     using WatcherRegRoot = QFutureWatcher<TRA::RegionNodePtr<TRA::BaseRegions> >;
     auto rootWatcherPtr = new WatcherRegRoot(this);
-    rootWatcherPtr->connect(rootWatcherPtr, &WatcherRegRoot::finished, [=]{
+    rootWatcherPtr->connect(rootWatcherPtr, &WatcherRegRoot::finished, [this, rootWatcherPtr] {
         mainModel->clear();
         mainModel->appendRow(new RegionVisualItem(rootWatcherPtr->result()));
         spinner_->stop();
     });
 
     spinner_->start();
-    QFuture<TRA::RegionNodePtr<TRA::BaseRegions>> future = QtConcurrent::run([path](){
+    QFuture<TRA::RegionNodePtr<TRA::BaseRegions> > future = QtConcurrent::run([path](){
         CSVRegionParser parser;
         auto data = parser.parseFromFile(path.toStdString());
         TRA::RegionNodePtr<TRA::BaseRegions> ptr = std::make_shared<TRA::TreeNodeRegion<TRA::BaseRegions >>(TRA::BaseRegions("All states", TRA::BaseRegions::RegionType::Undefined));
@@ -77,10 +77,9 @@ void MainWindow::init()
     mainModel = new QStandardItemModel(this);
     ui->treeVieeRegions->setModel(mainModel);
     ui->treeVieeRegions->header()->hide();
-    connect(ui->pushButtonSelectCSV, &QPushButton::clicked, [=](){
-        QFileInfo path(QFileDialog::getOpenFileName(this, "Выберите CSVFile"));
+    connect(ui->pushButtonSelectCSV, &QPushButton::clicked, [this](){
+        QFileInfo path(QFileDialog::getOpenFileName(this, "Выберите CSVFile", QDir::home().absolutePath(), "CSV(*.csv *.txt);; All(*)"));
         if (!path.exists()) {
-            QMessageBox::warning(this, "Внимание", "Данного файла не существует");
             return;
         }
         updateRegions(path.absoluteFilePath());
