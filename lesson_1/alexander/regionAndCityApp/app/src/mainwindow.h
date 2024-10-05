@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 class QStandardItemModel;
+class WaitingSpinnerWidget;
 
 namespace Ui {
 class MainWindow;
@@ -22,6 +23,8 @@ private:
     void init();
 
     QStandardItemModel* mainModel{nullptr};
+    WaitingSpinnerWidget* spinner_{nullptr};
+
     Ui::MainWindow *ui;
 };
 

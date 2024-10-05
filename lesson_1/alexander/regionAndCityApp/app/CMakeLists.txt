@@ -15,6 +15,8 @@ set(PROJECT_SOURCES
         src/mainwindow.cpp
         src/mainwindow.h
         src/mainwindow.ui
+        src/waitingspinnerwidget.h
+        src/waitingspinnerwidget.cpp
 )
 
 add_executable(app
