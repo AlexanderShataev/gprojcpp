@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include <set>
+#include <map>
 
 class Country;
 class QStandardItemModel;
@@ -30,7 +31,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    std::set<Country> con;
+    std::map<QString, Country> con;
     QStandardItemModel* model;
     QString currentFilePath;
 

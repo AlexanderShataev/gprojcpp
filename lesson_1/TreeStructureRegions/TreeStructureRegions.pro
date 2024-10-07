@@ -8,26 +8,18 @@ CONFIG += c++17
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += \
-    abstractlocality.cpp \
-    country.cpp \
-    filesdialog.cpp \
-    main.cpp \
-    mainwindow.cpp \
-    parserdata.cpp
+SOURCES += src/*.cpp
 
-HEADERS += \
-    abstractlocality.h \
-    country.h \
-    filesdialog.h \
-    mainwindow.h \
-    parserdata.h
+HEADERS += src/*.h
 
-FORMS += \
-    filesdialog.ui \
-    mainwindow.ui
+FORMS += src/*.ui
 
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+DESTDIR = $$PWD/bin
+
+BUILDPATH = $$PWD/build
+
+MOC_DIR = $$BUILDPATH
+RCC_DIR = $$BUILDPATH
+UI_DIR = $$BUILDPATH
+OBJECTS_DIR = $$BUILDPATH
+

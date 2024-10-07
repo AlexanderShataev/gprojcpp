@@ -25,10 +25,10 @@ FilesDialog::~FilesDialog()
 void FilesDialog::createFileSystemModel()
 {
     model = new QFileSystemModel(this);
-    model->setRootPath(QDir::rootPath());
+    model->setRootPath(QDir::homePath());
 
     ui->treeViewFiles->setModel(model);
-    ui->treeViewFiles->setRootIndex(model->index(QDir::rootPath()));
+    ui->treeViewFiles->setRootIndex(model->index(QDir::homePath()));
 
     ui->treeViewFiles->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     ui->treeViewFiles->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
