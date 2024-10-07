@@ -28,8 +28,8 @@ public:
 
 void MainWindow::initCountriesAndCities(const QVector<ParamsFile>& data) {
     for (auto d : data) {
-        auto itCountry = con.emplace(d.nameCountry_, d.iso2_, d.iso3_);
-        itCountry.first._M_const_cast()->addCity(d.nameCity_, d.population_, d.latitude_, d.longitude_);
+        auto [it, ok] = con.insert({d.nameCountry_, Country(d.nameCountry_, d.iso2_, d.iso3_)});
+        it->second.addCity(d.nameCity_, d.population_, d.latitude_, d.longitude_);
     }
 }
 
@@ -86,7 +86,7 @@ bool MainWindow::tryParsing()
 void MainWindow::initTreeView()
 {
     model = new QStandardItemModel();
-    for (auto& country : con) {
+    for (auto& [first, country] : con) {
         auto item = new ListStandardItem(country);
         model->appendRow(item);
     }
